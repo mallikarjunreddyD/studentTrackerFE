@@ -1,18 +1,12 @@
 import PropTypes from 'prop-types'
 import Icon from './Icon'
 
-const links = [
-  { id: 'users', label: 'Users', icon: 'users' },
-  { id: 'projects', label: 'Projects', icon: 'projects' },
-  { id: 'meetings', label: 'Meetings', icon: 'meetings' },
-]
-
-function Sidebar({ activePage, onNavigate }) {
+function Sidebar({ activePage, links, portalLabel, profile, onNavigate }) {
   return (
     <aside className="sidebar">
       <div className="brand">
         <span className="brand-mark">ST</span>
-        <div><strong>StudentTracker</strong><small>Admin portal</small></div>
+        <div><strong>StudentTracker</strong><small>{portalLabel}</small></div>
       </div>
 
       <nav aria-label="Main navigation">
@@ -30,16 +24,27 @@ function Sidebar({ activePage, onNavigate }) {
       </nav>
 
       <div className="admin-profile">
-        <span className="avatar admin-avatar">AD</span>
-        <div><strong>Administrator</strong><small>ADMIN</small></div>
+        <span className="avatar admin-avatar">{profile.initials}</span>
+        <div><strong>{profile.name}</strong><small>{profile.role}</small></div>
       </div>
     </aside>
   )
 }
 
-export default Sidebar
-
 Sidebar.propTypes = {
   activePage: PropTypes.string.isRequired,
+  links: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+  })).isRequired,
+  portalLabel: PropTypes.string.isRequired,
+  profile: PropTypes.shape({
+    initials: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+  }).isRequired,
   onNavigate: PropTypes.func.isRequired,
 }
+
+export default Sidebar
