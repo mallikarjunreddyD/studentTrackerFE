@@ -27,3 +27,43 @@ select {
 button {
   cursor: pointer;
 }
+.admin-profile {
+  flex-wrap: wrap;
+}
+
+.admin-profile > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-profile > div:last-child {
+  width: 100%;
+}
+
+.logout-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border: 1px solid #40536d;
+  border-radius: 8px;
+  background: transparent;
+  color: #b9c5d5;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.logout-button:hover {
+  border-color: #d97575;
+  background: rgba(201, 71, 71, 0.12);
+  color: #ffb4b4;
+}
+
+.logout-button:focus-visible {
+  outline: 3px solid rgba(217, 117, 117, 0.3);
+  outline-offset: 2px;
+}
