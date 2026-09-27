@@ -5,9 +5,9 @@ import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import { meetingPropType } from '../data/propTypes'
 
-function PortalMeetingsPage({ meetings, role, canAdd }) {
-  const action = canAdd ? (
-    <button className="add-button" type="button">
+function PortalMeetingsPage({ meetings, role, onAdd }) {
+  const action = onAdd ? (
+    <button className="add-button" type="button" onClick={onAdd}>
       <Icon name="plus" />
       Add Meeting
     </button>
@@ -34,7 +34,7 @@ function PortalMeetingsPage({ meetings, role, canAdd }) {
 PortalMeetingsPage.propTypes = {
   meetings: PropTypes.arrayOf(meetingPropType).isRequired,
   role: PropTypes.oneOf(['FACULTY', 'STUDENT']).isRequired,
-  canAdd: PropTypes.bool.isRequired,
+  onAdd: PropTypes.func,
 }
 
 export default PortalMeetingsPage

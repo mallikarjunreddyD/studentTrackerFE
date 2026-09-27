@@ -17,8 +17,8 @@ const studentMeetings = meetings.filter((meeting) =>
 function Student() {
   const [activePage, setActivePage] = useState('projects')
   const pages = {
-    projects: <PortalProjectsPage projects={studentProjects} role="STUDENT" canRegister={false} />,
-    meetings: <PortalMeetingsPage meetings={studentMeetings} role="STUDENT" canAdd={false} />,
+    projects: <PortalProjectsPage projects={studentProjects} role="STUDENT" />,
+    meetings: <PortalMeetingsPage meetings={studentMeetings} role="STUDENT" />,
   }
 
   return (

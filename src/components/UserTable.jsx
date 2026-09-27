@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { userPropType } from '../data/propTypes'
 import Icon from './Icon'
 
-function UserTable({ users }) {
+function UserTable({ users, onDelete, onEdit }) {
   return (
     <div className="table-card"><div className="table-wrap"><table>
       <thead><tr><th>User</th><th>Email</th><th>Role</th><th><span className="sr-only">Actions</span></th></tr></thead>
@@ -15,8 +15,8 @@ function UserTable({ users }) {
           <td className="email">{user.email}</td>
           <td><span className={`role-badge ${user.role.toLowerCase()}`}>{user.role}</span></td>
           <td><div className="actions">
-            <button className="icon-button" type="button" aria-label={`Edit ${user.name}`}><Icon name="edit" /></button>
-            <button className="icon-button delete" type="button" aria-label={`Delete ${user.name}`}><Icon name="trash" /></button>
+            <button className="icon-button" type="button" onClick={() => onEdit(user)} aria-label={`Edit ${user.name}`}><Icon name="edit" /></button>
+            <button className="icon-button delete" type="button" onClick={() => onDelete(user)} aria-label={`Delete ${user.name}`}><Icon name="trash" /></button>
           </div></td>
         </tr>
       ))}</tbody>
@@ -24,6 +24,10 @@ function UserTable({ users }) {
   )
 }
 
-export default UserTable
+UserTable.propTypes = {
+  users: PropTypes.arrayOf(userPropType).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+}
 
-UserTable.propTypes = { users: PropTypes.arrayOf(userPropType).isRequired }
+export default UserTable

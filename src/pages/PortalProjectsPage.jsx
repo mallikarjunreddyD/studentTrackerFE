@@ -5,9 +5,9 @@ import ProjectTable from '../components/ProjectTable'
 import SectionHeader from '../components/SectionHeader'
 import { projectPropType } from '../data/propTypes'
 
-function PortalProjectsPage({ projects, role, canRegister }) {
-  const action = canRegister ? (
-    <button className="add-button" type="button">
+function PortalProjectsPage({ projects, role, onRegister }) {
+  const action = onRegister ? (
+    <button className="add-button" type="button" onClick={onRegister}>
       <Icon name="plus" />
       Register Project
     </button>
@@ -17,7 +17,7 @@ function PortalProjectsPage({ projects, role, canRegister }) {
     <>
       <PageHeader
         eyebrow={role}
-        title={role === 'FACULTY' ? 'My Projects' : 'My Projects'}
+        title="My Projects"
         description={role === 'FACULTY'
           ? 'View and manage the projects assigned to you.'
           : 'View the projects in which you are enrolled.'}
@@ -34,7 +34,7 @@ function PortalProjectsPage({ projects, role, canRegister }) {
 PortalProjectsPage.propTypes = {
   projects: PropTypes.arrayOf(projectPropType).isRequired,
   role: PropTypes.oneOf(['FACULTY', 'STUDENT']).isRequired,
-  canRegister: PropTypes.bool.isRequired,
+  onRegister: PropTypes.func,
 }
 
 export default PortalProjectsPage

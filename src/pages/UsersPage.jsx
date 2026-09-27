@@ -5,9 +5,9 @@ import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import UserTable from '../components/UserTable'
 
-function UsersPage({ users }) {
+function UsersPage({ users, onAdd, onDelete, onEdit }) {
   const addButton = (
-    <button className="add-button" type="button">
+    <button className="add-button" type="button" onClick={onAdd}>
       <Icon name="plus" />
       Add User
     </button>
@@ -15,20 +15,20 @@ function UsersPage({ users }) {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Administration"
-        title="User Management"
-        description="View and manage the users in StudentTracker."
-        action={addButton}
-      />
-      <section aria-labelledby="users-heading">
+      <PageHeader eyebrow="Administration" title="User Management" description="View and manage the users in StudentTracker." action={addButton} />
+      <section>
         <SectionHeader title="All users" count={`${users.length} users`} />
-        <UserTable users={users} />
+        <UserTable users={users} onDelete={onDelete} onEdit={onEdit} />
       </section>
     </>
   )
 }
 
-export default UsersPage
+UsersPage.propTypes = {
+  users: PropTypes.arrayOf(userPropType).isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+}
 
-UsersPage.propTypes = { users: PropTypes.arrayOf(userPropType).isRequired }
+export default UsersPage
