@@ -1,8 +1,16 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { authActions } from '../store/auth-slice'
 
 function Auth() {
   const [role, setRole] = useState('ADMIN')
   const requiresId = role === 'FACULTY' || role === 'STUDENT'
+
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(authActions.login(role))
+  }
 
   return (
     <main className="auth-page">
@@ -20,7 +28,7 @@ function Auth() {
           <h1 id="login-title">Sign in to your portal</h1>
         </div>
 
-        <form className="auth-form" onSubmit={(event) => event.preventDefault()}>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             Role
             <select value={role} onChange={(event) => setRole(event.target.value)}>

@@ -4,7 +4,10 @@ import { useDispatch } from 'react-redux';
 import { authActions } from '../store/auth-slice';
 
 function Sidebar({ activePage, links, portalLabel, profile, onNavigate }) {
-  
+  const dispatch = useDispatch()
+  const handleLogOut = () => {
+    dispatch(authActions.logout())
+  }
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -29,7 +32,7 @@ function Sidebar({ activePage, links, portalLabel, profile, onNavigate }) {
       <div className="admin-profile">
         <span className="avatar admin-avatar">{profile.initials}</span>
         <div><strong>{profile.name}</strong><small>{profile.role}</small></div>
-        <div><button className="logout-button" type="button" >Logout</button></div>
+        <div><button className="logout-button" type="button" onClick={handleLogOut}>Logout</button></div>
       </div>
     </aside>
   )

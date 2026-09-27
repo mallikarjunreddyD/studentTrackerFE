@@ -4,15 +4,17 @@ import Admin from './modules/Admin'
 import Faculty from './modules/Faculty'
 import Student from './modules/Student'
 import './App.css'
+import { useSelector } from 'react-redux'
 
 function App() {
-  return (
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const role = useSelector(state => state.auth.role)
+    return (
     <>
-       <Auth /> 
-
-      {/* <Admin /> */}
-     {/* <Faculty /> */}
-      {/* <Student /> */}
+      { !isLoggedIn && <Auth /> }
+      {isLoggedIn && role === "ADMIN" && <Admin /> }
+     { isLoggedIn && role === "FACULTY" && <Faculty /> }
+      { isLoggedIn && role === "STUDENT" &&<Student /> }
     </>
   )
 }
