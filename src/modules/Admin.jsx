@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ConfirmDialog from '../components/ConfirmDialog'
 import Modal from '../components/Modal'
 import Sidebar from '../components/Sidebar'
@@ -6,7 +6,11 @@ import UserForm from '../components/UserForm'
 import MeetingsPage from '../pages/MeetingsPage'
 import ProjectsPage from '../pages/ProjectsPage'
 import UsersPage from '../pages/UsersPage'
-import { meetings, projects, users as initialUsers } from '../data/dummyData'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserData } from '../store/users-actions'
+import { fetchProjectData } from '../store/projects-actions'
+import { fetchMeetingsData } from '../store/meetings-actions'
 
 const links = [
   { id: 'users', label: 'Users', icon: 'users' },
@@ -16,7 +20,22 @@ const links = [
 
 function Admin() {
   const [activePage, setActivePage] = useState('users')
-  const [users, setUsers] = useState(initialUsers)
+  const dispatch = useDispatch()
+  const users= useSelector((state) => state.users.users)
+  const projects = useSelector((state) => state.projects.projects)
+  const meetings = useSelector((state) => state.meetings.meetings)
+
+  
+
+  useEffect(() => {
+    async function loaddata() {
+    await dispatch(fetchUserData())
+    await dispatch(fetchProjectData())
+    await dispatch(fetchMeetingsData())
+    } loaddata()
+  }, [dispatch])
+
+
   const [userForm, setUserForm] = useState(null)
   const [deleteCandidate, setDeleteCandidate] = useState(null)
 

@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MeetingForm from '../components/MeetingForm'
 import Modal from '../components/Modal'
 import ProjectForm from '../components/ProjectForm'
 import Sidebar from '../components/Sidebar'
 import PortalMeetingsPage from '../pages/PortalMeetingsPage'
 import PortalProjectsPage from '../pages/PortalProjectsPage'
-import { meetings as initialMeetings, projects as initialProjects } from '../data/dummyData'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProjectData } from '../store/projects-actions'
+import { fetchMeetingsData } from '../store/meetings-actions'
 
 const facultyName = 'Dr. Vikram Rao'
 const links = [
@@ -23,14 +25,22 @@ function formatDate(date) {
 
 function Faculty() {
   const [activePage, setActivePage] = useState('projects')
-  const [projects, setProjects] = useState(
-    initialProjects.filter((project) => project.faculty === facultyName),
-  )
-  const [meetings, setMeetings] = useState(
-    initialMeetings.filter((meeting) => meeting.faculty === facultyName),
-  )
+ 
   const [showProjectForm, setShowProjectForm] = useState(false)
   const [showMeetingForm, setShowMeetingForm] = useState(false)
+
+  const dispatch = useDispatch()
+  const projects = useSelector((state) => state.projects.projects)
+  const meetings = useSelector((state) => state.meetings.meetings)
+
+  useEffect(() => {
+    async function loaddata() {
+      await dispatch(fetchProjectData())
+      await dispatch(fetchMeetingsData())
+    } loaddata()
+  }, [dispatch])
+
+  console.log(projects)
 
   function registerProject(projectData) {
     const durations = { HONORS: 4, BTP: 2, AP: 1 }

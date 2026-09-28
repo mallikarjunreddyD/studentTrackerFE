@@ -1,20 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import PortalMeetingsPage from '../pages/PortalMeetingsPage'
 import PortalProjectsPage from '../pages/PortalProjectsPage'
-import { meetings, projects } from '../data/dummyData'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProjectData } from '../store/projects-actions'
+import { fetchMeetingsData } from '../store/meetings-actions'
+
 
 const links = [
   { id: 'projects', label: 'My Projects', icon: 'projects' },
   { id: 'meetings', label: 'Meetings', icon: 'meetings' },
 ]
 
-const studentProjects = projects.slice(0, 2)
+
+
+
+function Student() {
+
+  const dispatch = useDispatch()
+  const projects = useSelector((state) => state.projects.projects)
+  const meetings = useSelector((state) => state.meetings.meetings)
+const studentProjects = projects
 const studentMeetings = meetings.filter((meeting) =>
   studentProjects.some((project) => project.id === meeting.project),
 )
 
-function Student() {
+   useEffect(() => {
+    async function loaddata() {
+      await dispatch(fetchProjectData())
+      await dispatch(fetchMeetingsData())
+    } loaddata()
+  }, [dispatch])
+
+  console.log(studentProjects)
   const [activePage, setActivePage] = useState('projects')
   const pages = {
     projects: <PortalProjectsPage projects={studentProjects} role="STUDENT" />,
